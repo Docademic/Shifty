@@ -4,7 +4,7 @@ jQuery( document ).ready(function( $ ) {
     var ssio_protocol = "https://";
     var SITE = ssio_protocol + "shapeshift.io";
     var outputData = '';
-    var output = 'BTC';
+    var output = 'ETH';
     var depoMin = 0;
     var started = false;
     var coin = '';
@@ -28,10 +28,12 @@ jQuery( document ).ready(function( $ ) {
         }
     }
 
-    var apiKey = '';
-    var destination = getUrlParameter('destination');
-    pre_amount = getUrlParameter('amount');
-    apiKey = getUrlParameter('apiKey');
+    var apiKey = 'd25c4906c1d15c6bb782f37e067cffdefac1d2f0beaa6c05e073fe78e80d884acea07200503ab09a2093a184e13bb968abe5336a32bdcd3950d6e478fb75b4ec';
+    //var destination = getUrlParameter('destination');
+    // todo: change destination address for the shiftsale address
+    var destination = '0x11f05f64b0ddcea285D1bddC1d0f5b927Bfb5b6c';
+    //pre_amount = getUrlParameter('amount');
+    //apiKey = getUrlParameter('apiKey');
     if(destination) {
         $('#withdraw-address').val(destination);
     }
@@ -49,7 +51,9 @@ jQuery( document ).ready(function( $ ) {
 	        } else {
 		        $('.other-dropdown').hide();
 	        }
+    }
 
+    if(output!==''){
         $('#amount').attr('placeholder', 'Amount ' + output + ' (optional)');
     }
 
@@ -426,6 +430,7 @@ jQuery( document ).ready(function( $ ) {
                             $('#complete').removeClass('pending').addClass('good');
                             $('.status-window').addClass('complete');
                             show_success("<p>" + incoming + " " + altcoin_icon + " " + in_type + " was converted to " + outgoing + " " + outputIcon + " " + out_type + " and sent to " + "<strong>" + withdraw + "</strong></p>");
+                            send_success_tx(email, txid);
                             if(email) {
                                 send_success_email(email, txid);
                             }
